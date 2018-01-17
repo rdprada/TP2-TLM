@@ -21,16 +21,16 @@ void Generator::thread(void) {
 		rom_current_add = ROM_START_ADD + i;
 		socket.read(rom_current_add, read_data);
 
-		for (int j = 0; j < 8; ++j){
-			if (j<4){
-				write_data_second += ((read_data >> (j*4)) & 0xF) << (8*j+4);
+		for (int j = 0; j < 8; ++j) {
+			if (j < 4) {
+				write_data_second += ((read_data >> (j * 4)) & 0xF) << (8 * j + 4);
 			} else {
-				write_data_first += ((read_data >> (j*4)) & 0xF) << (8*(j-4)+4);
+				write_data_first += ((read_data >> (j * 4)) & 0xF) << (8 * (j - 4) + 4);
 			}
 		}
 
-		socket.write(VIDEO_START_ADD + 2*i,write_data_first);
-		socket.write(VIDEO_START_ADD + 2*i + 4,write_data_second);
+		socket.write(VIDEO_START_ADD + 2 * i, write_data_first);
+		socket.write(VIDEO_START_ADD + 2 * i + 4, write_data_second);
 		write_data_first = 0x0;
 		write_data_second = 0x0;
 
